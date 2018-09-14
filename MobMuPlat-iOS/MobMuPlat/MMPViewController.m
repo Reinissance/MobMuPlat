@@ -79,7 +79,6 @@
   int _channelCount;
   int _ticksPerBuffer;
   BOOL _inputEnabled;
-  BOOL _linkEnabled;
 
   // key = address, value = array of objects with that address.
   NSMutableDictionary<NSString *, NSMutableArray<MeControl *> *> *_addressToGUIObjectsDict;
@@ -1738,19 +1737,19 @@ static void * kAudiobusRunningOrConnectedChanged = &kAudiobusRunningOrConnectedC
       NSArray *msgArray = @[ @"/ipAddress", ipAddress ];
       [PdBase sendList:msgArray toReceiver:@"fromSystem"];
     } else if (list.count >= 2 &&
-               [list[0] isEqualToString:@"/textDialog"] &&
+               [list[0] isEqualToString:@"/textDialog"] || [list[0] isEqualToString:@"/numberDialog"] &&
                [list[1] isKindOfClass:[NSString class]]) {
-      NSString *tag = list[1];
-      NSString *title =
-          [[list subarrayWithRange:NSMakeRange(2, list.count - 2)] componentsJoinedByString:@" "];
-      [self showTextDialogWithTag:tag title:title];
+        NSString *tag = list[1];
+        NSString *title =
+        [[list subarrayWithRange:NSMakeRange(2, list.count - 2)] componentsJoinedByString:@" "];
+        [self showInputDialogWithTag:tag title:title numeric:([list[0] isEqualToString:@"/numberDialog"])];
     } else if (list.count >= 2 &&
                [list[0] isEqualToString:@"/confirmationDialog"] &&
                [list[1] isKindOfClass:[NSString class]]) {
       NSString *tag = list[1];
       NSString *title =
           [[list subarrayWithRange:NSMakeRange(2, list.count - 2)] componentsJoinedByString:@" "];
-      [self showConfirmationDialogWithTag:tag title:title];
+      [self showInputDialogWithTag:tag title:title numeric:([list[0] isEqualToString:@"/numberDialog"])];
     }
   }
 }
@@ -1771,16 +1770,18 @@ static void * kAudiobusRunningOrConnectedChanged = &kAudiobusRunningOrConnectedC
   }];
 }
 
-- (void)showConfirmationDialogWithTag:(NSString *)tag title:(NSString *)title {
+- (void)showInputDialogWithTag:(NSString *)tag title:(NSString *)title numeric:(BOOL) num {
   UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
                                                   message:title
                                                  delegate:self
                                         cancelButtonTitle:@"Cancel"
                                         otherButtonTitles:@"Ok", nil];
   // Use MMP category to capture the tag with the alert.
-  [alert showWithCompletion:^(UIAlertView *alertView, NSInteger buttonIndex) {
-    NSArray *msgArray = @[ @"/confirmationDialog", tag, @(buttonIndex) ];
-    [PdBase sendList:msgArray toReceiver:@"fromSystem"];
+    [alert showWithCompletion:^(UIAlertView *alertView, NSInteger buttonIndex) {
+        if (buttonIndex == 1 && [alertView textFieldAtIndex:0]) {
+            NSArray *msgArray = @[ (num) ? @"/numberDialog" : @"/textDialog", tag, (num) ? [NSNumber numberWithFloat:[[[alertView textFieldAtIndex:0] text] floatValue]] : [[alertView textFieldAtIndex:0] text] ] ;
+            [PdBase sendList:msgArray toReceiver:@"fromSystem"];
+        }
   }];
 }
 
