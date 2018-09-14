@@ -1790,7 +1790,7 @@ static void * kAudiobusRunningOrConnectedChanged = &kAudiobusRunningOrConnectedC
 }
 
 //receive OSC message from network, format into message to send into PureData patch
-- (void) receivedOSCMessage:(OSCMessage *)m	{
+- (void) receivedOSCMessage:(OSCMessage *)m    {
   NSString *address = [m address];
 
   NSMutableArray *msgArray = [[NSMutableArray alloc]init]; //create blank message array for sending to pd
@@ -1893,9 +1893,9 @@ static void * kAudiobusRunningOrConnectedChanged = &kAudiobusRunningOrConnectedC
 
 #if TARGET_CPU_ARM
 // MIDIPacket must be 4-byte aligned
-#define MyMIDIPacketNext(pkt)	((MIDIPacket *)(((uintptr_t)(&(pkt)->data[(pkt)->length]) + 3) & ~3))
+#define MyMIDIPacketNext(pkt)    ((MIDIPacket *)(((uintptr_t)(&(pkt)->data[(pkt)->length]) + 3) & ~3))
 #else
-#define MyMIDIPacketNext(pkt)	((MIDIPacket *)&(pkt)->data[(pkt)->length])
+#define MyMIDIPacketNext(pkt)    ((MIDIPacket *)&(pkt)->data[(pkt)->length])
 #endif
 
 - (void)midiSource:(PGMidiSource *)midiSource midiReceived:(const MIDIPacketList *)packetList {
@@ -1978,7 +1978,7 @@ static void * kAudiobusRunningOrConnectedChanged = &kAudiobusRunningOrConnectedC
       }
     default:
       break;
-		}
+        }
 }
 
 // receive midi from PD, out to PGMidi

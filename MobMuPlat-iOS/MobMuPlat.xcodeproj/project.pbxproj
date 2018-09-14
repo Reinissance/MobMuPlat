@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4A0128AC214C0E2000BBA831 /* libABLLink.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A0128AB214C0E2000BBA831 /* libABLLink.a */; };
 		4A8E698C20F6263300491807 /* MMPExamples-Link.mmp in Resources */ = {isa = PBXBuildFile; fileRef = 4A8E698620F6263300491807 /* MMPExamples-Link.mmp */; };
 		4A8E698D20F6263300491807 /* MMPExamples-Link-Pad.mmp in Resources */ = {isa = PBXBuildFile; fileRef = 4A8E698820F6263300491807 /* MMPExamples-Link-Pad.mmp */; };
 		4A8E698E20F6263300491807 /* MMPExamples-Link.pd in Resources */ = {isa = PBXBuildFile; fileRef = 4A8E698920F6263300491807 /* MMPExamples-Link.pd */; };
@@ -280,6 +281,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4A0128A6214C0E1F00BBA831 /* ABLLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABLLink.h; sourceTree = "<group>"; };
+		4A0128A7214C0E1F00BBA831 /* ABLLinkUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABLLinkUtils.h; sourceTree = "<group>"; };
+		4A0128A8214C0E1F00BBA831 /* ABLLinkSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABLLinkSettingsViewController.h; sourceTree = "<group>"; };
+		4A0128AB214C0E2000BBA831 /* libABLLink.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libABLLink.a; sourceTree = "<group>"; };
 		4A8E698620F6263300491807 /* MMPExamples-Link.mmp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "MMPExamples-Link.mmp"; sourceTree = "<group>"; };
 		4A8E698820F6263300491807 /* MMPExamples-Link-Pad.mmp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "MMPExamples-Link-Pad.mmp"; sourceTree = "<group>"; };
 		4A8E698920F6263300491807 /* MMPExamples-Link.pd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "MMPExamples-Link.pd"; sourceTree = "<group>"; };
@@ -714,6 +719,7 @@
 				90503180188474D9003D85E9 /* MediaPlayer.framework in Frameworks */,
 				DC456B03176BC1540080BB33 /* CoreLocation.framework in Frameworks */,
 				DCB11AE11702B315004B92EA /* CoreMotion.framework in Frameworks */,
+				4A0128AC214C0E2000BBA831 /* libABLLink.a in Frameworks */,
 				DCFF717716B59F3100CDCEAE /* libz.dylib in Frameworks */,
 				DC8EBBB91660F3B4003C3162 /* QuartzCore.framework in Frameworks */,
 				DC29446916584B0100BF4A50 /* AudioToolbox.framework in Frameworks */,
@@ -737,9 +743,29 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4A0128A5214C0E1F00BBA831 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				4A0128A6214C0E1F00BBA831 /* ABLLink.h */,
+				4A0128A7214C0E1F00BBA831 /* ABLLinkUtils.h */,
+				4A0128A8214C0E1F00BBA831 /* ABLLinkSettingsViewController.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		4A0128AA214C0E2000BBA831 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				4A0128AB214C0E2000BBA831 /* libABLLink.a */,
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
 		4AD34EC020F2AB3E005D36E7 /* iosLink */ = {
 			isa = PBXGroup;
 			children = (
+				4A0128A5214C0E1F00BBA831 /* include */,
+				4A0128AA214C0E2000BBA831 /* lib */,
 				4AD34EC620F2AB95005D36E7 /* abl_link.h */,
 				4AD34EC120F2AB3E005D36E7 /* abl_link.c */,
 			);
@@ -2008,6 +2034,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/iosLink/lib",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
@@ -2024,7 +2051,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../libpd/** $(SRCROOT)/../PdParty/src/** $(SRCROOT)/../PdParty/libs ../../LinkKit/include";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../libpd/** $(SRCROOT)/../PdParty/src/** $(SRCROOT)/../PdParty/libs";
 				VALID_ARCHS = "armv7 armv7s arm64";
 				WRAPPER_EXTENSION = app;
 			};
@@ -2053,6 +2080,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/iosLink/lib",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (
@@ -2069,7 +2097,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../libpd/** $(SRCROOT)/../PdParty/src/** $(SRCROOT)/../PdParty/libs ../../LinkKit/include";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../libpd/** $(SRCROOT)/../PdParty/src/** $(SRCROOT)/../PdParty/libs";
 				VALID_ARCHS = "armv7 armv7s arm64";
 				WRAPPER_EXTENSION = app;
 			};
